@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    spotify
-    brave
+    vscodium
+    
   ];
 }

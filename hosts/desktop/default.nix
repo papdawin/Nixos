@@ -1,25 +1,14 @@
-{ ... }:
+{ pkgs, config, ... }:
 {
   networking.hostName = "papdPC";
-  # TODO: add GPU specific stuff
-
-
-  # Docker GPU
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-    enableOnBoot = true;
-    daemon.settings = {
-      "default-runtime" = "nvidia";
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  boot.loader = {
+    grub = {
+      enable = true;
+      efiSupport = true;
+      devices = [ "nodev" ];
     };
+    efi.canTouchEfiVariables = true; # requires your ESP to be mounted at /boot
   };
-
-  hardware.opengl.enable = true;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  hardware.nvidia-container-toolkit.enable = true;
 }

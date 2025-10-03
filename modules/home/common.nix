@@ -3,7 +3,7 @@
   programs.home-manager.enable = true;
   programs.zsh = {
     enable = true;
-    autosuggestions.enable = true;
+    #autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
@@ -26,5 +26,5 @@
     htop
   ];
 
-  home.stateVersion = "25.05";
+  home.stateVersion = "24.05";
 }
