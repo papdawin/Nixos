@@ -9,7 +9,9 @@
 
   time.timeZone = "Europe/Budapest";
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = { LC_TIME = "hu_HU.UTF-8"; };
+  i18n.extraLocaleSettings = { 
+    LC_TIME = "hu_HU.UTF-8"; 
+  };
   services.xserver.xkb = {
     layout = "hu";
     variant = "";
@@ -22,7 +24,7 @@
     shell = pkgs.zsh;
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  # security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
   environment.systemPackages = with pkgs; [
