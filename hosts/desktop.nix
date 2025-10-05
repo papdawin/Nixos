@@ -1,7 +1,10 @@
 { ... }:
 {
   networking.hostName = "desktop";
-  imports = [ ../modules/programs/staples.nix ];
+  imports = [ 
+    ../modules/programs/staples.nix
+    ../modules/programs/git.nix 
+  ];
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
