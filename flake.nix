@@ -1,5 +1,5 @@
 {
-  description = "Minimal modular NixOS setup (no Home Manager) for server/desktop/laptop";
+  description = "My personal nixos configuration used across my workstations";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -15,8 +15,7 @@
         inherit system;
         modules = [
           ./modules/core.nix
-          ./modules/devops-minimal.nix
-          # add or remove shared modules above as you like
+          ./modules/sysops.nix
           (./hosts + "/${hostName}.nix")
         ] ++ extraModules;
       };

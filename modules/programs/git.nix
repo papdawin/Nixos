@@ -1,6 +1,5 @@
 { lib, pkgs, ... }:
 {
-  # System-wide Git config (works without Home Manager)
   programs.git.enable = true;
 
   environment.etc."gitconfig".text = ''
