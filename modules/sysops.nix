@@ -6,5 +6,6 @@
     wget 
     htop 
     jq 
+    unzip
   ];
 }

@@ -1,5 +1,7 @@
 { ... }:
 {
   networking.hostName = "laptop";
-  # imports = [ ../modules/programs/git.nix ];
+  imports = [
+    ../modules/internals/home-manager.nix
+  ];
 }
