@@ -2,6 +2,7 @@
 {
   networking.hostName = "desktop";
   imports = [
+    ../modules/internals/utility.nix
     ../modules/internals/display.nix
     ../modules/internals/home-manager.nix
     ../modules/programs/staples.nix

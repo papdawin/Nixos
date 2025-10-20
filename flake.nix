@@ -2,12 +2,13 @@
   description = "My personal nixos configuration used across my workstations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, catppuccin, ... }:
   let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
@@ -15,7 +16,9 @@
     mkHost = hostName: extraModules:
       lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit catppuccin; };
         modules = [
+          catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
           ./modules/core.nix
           ./modules/sysops.nix

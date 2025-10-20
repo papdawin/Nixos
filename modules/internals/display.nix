@@ -12,11 +12,11 @@ in
   environment.systemPackages = with pkgs; [
     grim
     slurp
-    pkgs.greetd.tuigreet
+    tuigreet
 
     hyprsunset
     hyprpaper
-    catppuccin-cursors.macchiatoMauve
+    hyprshot
     nautilus
     blueman
 
@@ -32,9 +32,9 @@ in
   services.greetd = lib.mkIf isDesktop {
     enable = true;
     settings = {
-      terminal.vt = 7;
+      terminal.vt = lib.mkForce 7;
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${lib.escapeShellArg "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/Hyprland"}";
+        command = "${pkgs.tuigreet}/bin/tuigreet --cmd ${lib.escapeShellArg "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/Hyprland"}";
       };
     };
   };
@@ -83,11 +83,10 @@ in
             enabled = true;
           };
           workspace = [
-            "1,monitor:eDP-1,default:true"
-            "2,monitor:eDP-1"
-            "3,monitor:eDP-1"
-            "4,monitor:eDP-1"
-            "5,monitor:eDP-1"
+            "1,monitor:HDMI-A-2,default:true"
+            "2,monitor:HDMI-A-3"
+            "3,monitor:HDMI-A-2"
+            "4,monitor:HDMI-A-3"
           ];
           bind = [
             "$mod,Return,exec,alacritty"
@@ -96,17 +95,17 @@ in
             "$mod,C,exec,codium"
             "$mod,Q,exec,pkill Hyprland"
             "$mod,D,exec,wofi --show drun"
+            "$mod,SHIFT,exec,hyprshot -m region"
+            "$mod,PRINT,exec,hyprshot -m output"
             "$mod,E,exec,nautilus"
             "$mod,1,workspace,1"
             "$mod,2,workspace,2"
             "$mod,3,workspace,3"
             "$mod,4,workspace,4"
-            "$mod,5,workspace,5"
             "$mod SHIFT,1,movetoworkspace,1"
             "$mod SHIFT,2,movetoworkspace,2"
             "$mod SHIFT,3,movetoworkspace,3"
             "$mod SHIFT,4,movetoworkspace,4"
-            "$mod SHIFT,5,movetoworkspace,5"
           ];
           bindm = [
             "$mod,mouse:272,movewindow"
@@ -126,56 +125,56 @@ in
 
       programs.waybar = {
         enable = true;
-        settings.mainBar = {
-          layer = "top";
-          position = "top";
-          "modules-left" = [ "hyprland/workspaces" ];
-          "modules-center" = [ "clock" ];
-          "modules-right" = [ "bluetooth" "network" "pulseaudio" "battery" "tray" ];
-          # clock = {
-          #   format = "{:%A, %d %B %Y  %H:%M}";
-          #   tooltip-format = "{:%Y-%m-%d %H:%M:%S}";
-          # };
-          # bluetooth = {
-          #   format-connected = " {device_alias}";
-          #   format-connected-battery = " {device_alias} {battery_percentage}%";
-          #   format-on = "";
-          #   format-off = "";
-          #   on-click = "${pkgs.blueman}/bin/blueman-manager";
-          # };
-          # network = {
-          #   format-wifi = "  {essid}";
-          #   format-ethernet = "  {ifname}";
-          #   format-disconnected = "  offline";
-          #   on-click = "nm-connection-editor";
-          #   tooltip-format = "{ifname} - {ipaddr}";
-          # };
-          # pulseaudio = {
-          #   format = "{icon} {volume}%";
-          #   tooltip-format = "{desc}";
-          #   format-icons = {
-          #     headphone = "";
-          #     hands-free = "";
-          #     headset = "";
-          #     phone = "";
-          #     portable = "";
-          #     car = "";
-          #     default = [ "" "" "" ];
-          #   };
-          #   on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-          #   on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
-          #   on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          # };
-          # battery = {
-          #   format = "{icon} {capacity}%";
-          #   format-charging = " {capacity}%";
-          #   tooltip-format = "{time}";
-          #   format-icons = [ "" "" "" "" "" ];
-          # };
-          # tray = {
-          #   spacing = 8;
-          # };
-        };
+        # settings.mainBar = {
+        #   layer = "top";
+        #   position = "top";
+        #   "modules-left" = [ "hyprland/workspaces" ];
+        #   "modules-center" = [ "clock" ];
+        #   "modules-right" = [ "bluetooth" "network" "pulseaudio" "battery" "tray" ];
+        #   clock = {
+        #     format = "{:%A, %d %B %Y  %H:%M}";
+        #     tooltip-format = "{:%Y-%m-%d %H:%M:%S}";
+        #   };
+        #   bluetooth = {
+        #     format-connected = " {device_alias}";
+        #     format-connected-battery = " {device_alias} {battery_percentage}%";
+        #     format-on = "";
+        #     format-off = "";
+        #     on-click = "${pkgs.blueman}/bin/blueman-manager";
+        #   };
+        #   network = {
+        #     format-wifi = "  {essid}";
+        #     format-ethernet = "  {ifname}";
+        #     format-disconnected = "  offline";
+        #     on-click = "nm-connection-editor";
+        #     tooltip-format = "{ifname} - {ipaddr}";
+        #   };
+        #   pulseaudio = {
+        #     format = "{icon} {volume}%";
+        #     tooltip-format = "{desc}";
+        #     format-icons = {
+        #       headphone = "";
+        #       hands-free = "";
+        #       headset = "";
+        #       phone = "";
+        #       portable = "";
+        #       car = "";
+        #       default = [ "" "" "" ];
+        #     };
+        #     on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        #     on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        #     on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        #   };
+        #   battery = {
+        #     format = "{icon} {capacity}%";
+        #     format-charging = " {capacity}%";
+        #     tooltip-format = "{time}";
+        #     format-icons = [ "" "" "" "" "" ];
+        #   };
+        #   tray = {
+        #     spacing = 8;
+        #   };
+        # };
       };
 
       programs.wofi = {
@@ -187,14 +186,14 @@ in
         };
       };
 
-#       xdg.configFile."hypr/hyprpaper.conf".text = ''
-# # Catppuccin Mocha inspired wallpaper setup.
-# # Drop your wallpaper at ~/Pictures/nix-black.png
-# preload = ~/Pictures/nix-black.png
-# wallpaper = eDP-1,~/Pictures/nix-black.png
-# splash = false
-# ipc = off
-#       '';
+      xdg.configFile."hypr/hyprpaper.conf".text = ''
+# Catppuccin Mocha inspired wallpaper setup.
+# Drop your wallpaper at ~/Pictures/nix-black.png
+preload = ~/Pictures/nix-black.png
+wallpaper = HDMI-A-2,~/Pictures/nix-black.png
+splash = false
+ipc = off
+      '';
 
 #       xdg.configFile."hypr/hyprsunset.conf".text = ''
 # # Catppuccin warm tint through the evening.
