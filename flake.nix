@@ -2,42 +2,40 @@
   description = "My personal nixos configuration used across my workstations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
-    let
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      forAll = f: builtins.listToAttrs (map (s: { name = s; value = f s; }) systems);
-      lib = nixpkgs.lib;
-      mkHost = { system, hostname, role }:
-        lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./modules/system/common.nix
-            (import (./modules/system + "/${role}Role.nix"))
-            (import (./hosts + "/${hostname}"))
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.papdawin = {
-                imports = [
-                  ./modules/home/common.nix
-                  ./modules/home/dev.nix
-                ];
-              };
-            }
-          ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        server  = mkHost { system = "x86_64-linux"; hostname = "server";  role = "server";  };
-        desktop           = mkHost { system = "x86_64-linux"; hostname = "desktop";           role = "desktop"; };
-        laptop  = mkHost { system = "x86_64-linux"; hostname = "laptop";  role = "laptop";  };
+  outputs = { self, nixpkgs, home-manager, catppuccin, ... }:
+  let
+    system = "x86_64-linux";
+    lib = nixpkgs.lib;
+
+    mkHost = hostName: extraModules:
+      lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit catppuccin; };
+        modules = [
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager
+          ./modules/core.nix
+          ./modules/sysops.nix
+          (./hosts + "/${hostName}.nix")
+        ] ++ extraModules;
       };
+  in {
+    nixosConfigurations = {
+      server  = mkHost "server"  [
+        ./hosts/hardware/server-hardware.nix
+      ];
+      desktop = mkHost "desktop" [
+        ./hosts/hardware/desktop-hardware.nix
+      ];
+      laptop  = mkHost "laptop"  [
+        ./hosts/hardware/laptop-hardware.nix
+      ];
     };
+  };
 }

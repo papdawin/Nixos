@@ -1,8 +1,11 @@
 { pkgs, ... }:
-
 {
   environment.systemPackages = with pkgs; [
-    vscodium
-    
+    git 
+    curl 
+    wget 
+    htop 
+    jq 
+    unzip
   ];
 }
