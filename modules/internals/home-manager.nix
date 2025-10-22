@@ -13,13 +13,11 @@
     programs.home-manager.enable = true;
 
     catppuccin = {
-      enable  = true;
-      flavor  = "macchiato";  # latte | frappe | macchiato | mocha
-      accent  = "mauve";
+      enable = true;
+      flavor = "macchiato";
+      accent = "peach";
     };
 
-    # example per-app enable:
-    # programs.bat.enable = true;
-    # catppuccin.bat.enable = true;
+    catppuccin.cursors.enable = false; # Does not work as of now
   };
 }

@@ -12,8 +12,7 @@ in
   environment.systemPackages = with pkgs; [
     grim
     slurp
-    tuigreet
-
+    hyprlock
     hyprsunset
     hyprpaper
     hyprshot
@@ -21,7 +20,7 @@ in
     blueman
 
     waybar
-    wofi
+    rofi-wayland
   ];
 
   programs.hyprland = lib.mkIf isDesktop {
@@ -34,7 +33,8 @@ in
     settings = {
       terminal.vt = lib.mkForce 7;
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --cmd ${lib.escapeShellArg "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/Hyprland"}";
+        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/Hyprland";
+        user = "papdawin";
       };
     };
   };
@@ -65,7 +65,14 @@ in
           "$mod" = "SUPER";
           env = [
             "NIXOS_OZONE_WL,1"
+            "XCURSOR_THEME,Bibata-Modern-Ice"
+            "XCURSOR_SIZE,24"
           ];
+          cursor = {
+            inactive_timeout = 0;
+            hide_on_key_press = false;
+            hide_on_touch = false;
+          };
           general = {
             gaps_in = 2;
             gaps_out = 4;
@@ -94,7 +101,7 @@ in
             "$mod,B,exec,brave"
             "$mod,C,exec,codium"
             "$mod,Q,exec,pkill Hyprland"
-            "$mod,D,exec,wofi --show drun"
+            "$mod,D,exec,rofi -show drun"
             "$mod,SHIFT,exec,hyprshot -m region"
             "$mod,PRINT,exec,hyprshot -m output"
             "$mod,E,exec,nautilus"
@@ -112,6 +119,7 @@ in
             "$mod,mouse:273,resizewindow"
           ];
           "exec-once" = [
+            "${pkgs.hyprlock}/bin/hyprlock --immediate"
             "${pkgs.hyprpaper}/bin/hyprpaper"
             "${pkgs.hyprsunset}/bin/hyprsunset"
             "${pkgs.blueman}/bin/blueman-applet"
@@ -123,66 +131,73 @@ in
       programs.alacritty.enable = true;
       services.dunst.enable = true;
 
-      programs.waybar = {
-        enable = true;
-        # settings.mainBar = {
-        #   layer = "top";
-        #   position = "top";
-        #   "modules-left" = [ "hyprland/workspaces" ];
-        #   "modules-center" = [ "clock" ];
-        #   "modules-right" = [ "bluetooth" "network" "pulseaudio" "battery" "tray" ];
-        #   clock = {
-        #     format = "{:%A, %d %B %Y  %H:%M}";
-        #     tooltip-format = "{:%Y-%m-%d %H:%M:%S}";
-        #   };
-        #   bluetooth = {
-        #     format-connected = " {device_alias}";
-        #     format-connected-battery = " {device_alias} {battery_percentage}%";
-        #     format-on = "";
-        #     format-off = "";
-        #     on-click = "${pkgs.blueman}/bin/blueman-manager";
-        #   };
-        #   network = {
-        #     format-wifi = "  {essid}";
-        #     format-ethernet = "  {ifname}";
-        #     format-disconnected = "  offline";
-        #     on-click = "nm-connection-editor";
-        #     tooltip-format = "{ifname} - {ipaddr}";
-        #   };
-        #   pulseaudio = {
-        #     format = "{icon} {volume}%";
-        #     tooltip-format = "{desc}";
-        #     format-icons = {
-        #       headphone = "";
-        #       hands-free = "";
-        #       headset = "";
-        #       phone = "";
-        #       portable = "";
-        #       car = "";
-        #       default = [ "" "" "" ];
-        #     };
-        #     on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-        #     on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
-        #     on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-        #   };
-        #   battery = {
-        #     format = "{icon} {capacity}%";
-        #     format-charging = " {capacity}%";
-        #     tooltip-format = "{time}";
-        #     format-icons = [ "" "" "" "" "" ];
-        #   };
-        #   tray = {
-        #     spacing = 8;
-        #   };
-        # };
+      home.pointerCursor = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+        size = 24;
       };
 
-      programs.wofi = {
+      programs.waybar = {
         enable = true;
-        settings = {
-          allow_images = false;
-          prompt = "Search";
-          show = "drun";
+        settings.mainBar = {
+          layer = "top";
+          position = "top";
+          "modules-left" = [ "hyprland/workspaces" ];
+          "modules-center" = [ "clock" ];
+          "modules-right" = [ "bluetooth" "network" "pulseaudio" "battery" "tray" ];
+          clock = {
+            format = "{:%A, %d %B %Y  %H:%M}";
+            tooltip-format = "{:%Y-%m-%d %H:%M:%S}";
+          };
+          bluetooth = {
+            format-connected = " {device_alias}";
+            format-connected-battery = " {device_alias} {battery_percentage}%";
+            format-on = "";
+            format-off = "";
+            on-click = "${pkgs.blueman}/bin/blueman-manager";
+          };
+          network = {
+            format-wifi = "  {essid}";
+            format-ethernet = "  {ifname}";
+            format-disconnected = "  offline";
+            on-click = "nm-connection-editor";
+            tooltip-format = "{ifname} - {ipaddr}";
+          };
+          pulseaudio = {
+            format = "{icon} {volume}%";
+            tooltip-format = "{desc}";
+            format-icons = {
+              headphone = "";
+              hands-free = "";
+              headset = "";
+              phone = "";
+              portable = "";
+              car = "";
+              default = [ "" "" "" ];
+            };
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+            on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+          };
+          battery = {
+            format = "{icon} {capacity}%";
+            format-charging = " {capacity}%";
+            tooltip-format = "{time}";
+            format-icons = [ "" "" "" "" "" ];
+          };
+          tray = {
+            spacing = 8;
+          };
+        };
+      };
+
+      programs.rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
+        extraConfig = {
+          modi = "drun";
+          show-icons = false;
+          display-drun = "Search";
         };
       };
 
