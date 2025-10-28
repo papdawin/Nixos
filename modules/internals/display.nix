@@ -3,6 +3,8 @@ let
   isDesktop = config.networking.hostName == "desktop";
 in
 {
+  imports = [ ./waybar-config.nix ];
+
   console.keyMap = "hu";
 
   services.xserver.enable = false;
@@ -18,6 +20,7 @@ in
     hyprshot
     nautilus
     blueman
+    htop
 
     waybar
     rofi-wayland
@@ -27,6 +30,17 @@ in
     enable = true;
     package = pkgs.hyprland;
   };
+
+  programs.gamemode = lib.mkIf isDesktop {
+    enable = true;
+  };
+
+  # Provide icon fonts so Waybar glyphs render correctly.
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+  ];
 
   services.greetd = lib.mkIf isDesktop {
     enable = true;
@@ -56,7 +70,10 @@ in
         enable = true;
         package = pkgs.hyprland;
         settings = {
-          monitor = [ "eDP-1,preferred,0x0,1" ];
+          monitor = [
+            "HDMI-A-3,preferred,0x0,1"
+            "HDMI-A-2,preferred,1920x0,1"
+          ];
           input = {
             kb_layout = "hu";
             follow_mouse = 1;
@@ -102,7 +119,7 @@ in
             "$mod,C,exec,codium"
             "$mod,Q,exec,pkill Hyprland"
             "$mod,D,exec,rofi -show drun"
-            "$mod,SHIFT,exec,hyprshot -m region"
+            "$mod SHIFT,S,exec,hyprshot -m region"
             "$mod,PRINT,exec,hyprshot -m output"
             "$mod,E,exec,nautilus"
             "$mod,1,workspace,1"
@@ -137,60 +154,6 @@ in
         size = 24;
       };
 
-      programs.waybar = {
-        enable = true;
-        settings.mainBar = {
-          layer = "top";
-          position = "top";
-          "modules-left" = [ "hyprland/workspaces" ];
-          "modules-center" = [ "clock" ];
-          "modules-right" = [ "bluetooth" "network" "pulseaudio" "battery" "tray" ];
-          clock = {
-            format = "{:%A, %d %B %Y  %H:%M}";
-            tooltip-format = "{:%Y-%m-%d %H:%M:%S}";
-          };
-          bluetooth = {
-            format-connected = " {device_alias}";
-            format-connected-battery = " {device_alias} {battery_percentage}%";
-            format-on = "";
-            format-off = "";
-            on-click = "${pkgs.blueman}/bin/blueman-manager";
-          };
-          network = {
-            format-wifi = "  {essid}";
-            format-ethernet = "  {ifname}";
-            format-disconnected = "  offline";
-            on-click = "nm-connection-editor";
-            tooltip-format = "{ifname} - {ipaddr}";
-          };
-          pulseaudio = {
-            format = "{icon} {volume}%";
-            tooltip-format = "{desc}";
-            format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = [ "" "" "" ];
-            };
-            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-            on-scroll-up = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
-            on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          };
-          battery = {
-            format = "{icon} {capacity}%";
-            format-charging = " {capacity}%";
-            tooltip-format = "{time}";
-            format-icons = [ "" "" "" "" "" ];
-          };
-          tray = {
-            spacing = 8;
-          };
-        };
-      };
-
       programs.rofi = {
         enable = true;
         package = pkgs.rofi-wayland;
@@ -206,6 +169,7 @@ in
 # Drop your wallpaper at ~/Pictures/nix-black.png
 preload = ~/Pictures/nix-black.png
 wallpaper = HDMI-A-2,~/Pictures/nix-black.png
+wallpaper = HDMI-A-3,~/Pictures/nix-black.png
 splash = false
 ipc = off
       '';

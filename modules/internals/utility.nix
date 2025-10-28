@@ -5,6 +5,7 @@
         blueman
         pavucontrol
         networkmanagerapplet
+        networkmanager-openvpn
   ];
   
   hardware.bluetooth = {
