@@ -1,13 +1,21 @@
 { pkgs, ... }:
+let
+  #homeLabProfile = ./openvpn/sonrisa.ovpn;
+in
 {
   environment.systemPackages = with pkgs; [
         nautilus
         blueman
         pavucontrol
         networkmanagerapplet
-        networkmanager-openvpn
+        openvpn
   ];
   
+  #services.openvpn.servers.homeLab = {
+  #  autoStart = false;
+    # config = builtins.readFile homeLabProfile;
+  #};
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

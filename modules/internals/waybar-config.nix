@@ -118,158 +118,6 @@ let
     PY
   '';
 
-  vpnStatusScript = pkgs.writeShellScriptBin "waybar-vpn-status" ''
-    ${pkgs.python3}/bin/python - <<'PY'
-    import json
-    import subprocess
-
-    NMCLI = "${pkgs.networkmanager}/bin/nmcli"
-    VPN_TYPES = {"vpn", "wireguard", "tun"}
-
-
-    def call_nmcli(args):
-        proc = subprocess.run(
-            [NMCLI] + args, capture_output=True, text=True, check=False
-        )
-        if proc.returncode != 0:
-            message = proc.stderr.strip() or proc.stdout.strip() or "unknown error"
-            raise RuntimeError(message)
-        return proc.stdout.strip()
-
-
-    def first_vpn(active_only):
-        args = ["-t", "-f", "NAME,TYPE", "connection", "show"]
-        if active_only:
-            args.append("--active")
-        output = call_nmcli(args)
-        for line in output.splitlines():
-            if not line:
-                continue
-            name, _, ctype = line.partition(":")
-            if not ctype:
-                continue
-            if ctype.strip().lower() in VPN_TYPES:
-                return name.strip()
-        return None
-
-
-    try:
-        active_name = first_vpn(True)
-    except RuntimeError as exc:
-        print(
-            json.dumps(
-                {
-                    "text": "",
-                    "tooltip": f"VPN status unavailable: {exc}",
-                    "class": "vpn-error",
-                }
-            )
-        )
-        raise SystemExit(0)
-
-    if active_name:
-        print(
-            json.dumps(
-                {
-                    "text": "",
-                    "tooltip": f"Connected to {active_name}\\nClick to disconnect.",
-                    "class": "vpn-connected",
-                }
-            )
-        )
-        raise SystemExit(0)
-
-    try:
-        candidate = first_vpn(False)
-    except RuntimeError as exc:
-        print(
-            json.dumps(
-                {
-                    "text": "",
-                    "tooltip": f"VPN information unavailable: {exc}",
-                    "class": "vpn-error",
-                }
-            )
-        )
-        raise SystemExit(0)
-
-    if candidate:
-        tooltip = f"No VPN active.\\nClick to connect to {candidate}."
-        css_class = "vpn-disconnected"
-    else:
-        tooltip = "No VPN profiles found in NetworkManager."
-        css_class = "vpn-missing"
-
-    print(json.dumps({"text": "", "tooltip": tooltip, "class": css_class}))
-    PY
-  '';
-
-  vpnToggleScript = pkgs.writeShellScriptBin "waybar-toggle-vpn" ''
-    ${pkgs.python3}/bin/python - <<'PY'
-    import subprocess
-    import sys
-
-    NMCLI = "${pkgs.networkmanager}/bin/nmcli"
-    VPN_TYPES = {"vpn", "wireguard", "tun"}
-
-
-    def call_nmcli(args):
-        return subprocess.run(
-            [NMCLI] + args, capture_output=True, text=True, check=False
-        )
-
-
-    def first_vpn(active_only):
-        args = ["-t", "-f", "NAME,TYPE", "connection", "show"]
-        if active_only:
-            args.append("--active")
-        proc = call_nmcli(args)
-        if proc.returncode != 0:
-            message = proc.stderr.strip() or proc.stdout.strip()
-            raise RuntimeError(message or "unable to query connections")
-        for line in proc.stdout.strip().splitlines():
-            if not line:
-                continue
-            name, _, ctype = line.partition(":")
-            if not ctype:
-                continue
-            if ctype.strip().lower() in VPN_TYPES:
-                return name.strip()
-        return None
-
-
-    try:
-        active_name = first_vpn(True)
-    except RuntimeError as exc:
-        print(f"[waybar-toggle-vpn] {exc}", file=sys.stderr)
-        raise SystemExit(1)
-
-    if active_name:
-        result = call_nmcli(["connection", "down", "id", active_name])
-        if result.returncode != 0:
-            message = result.stderr.strip() or result.stdout.strip()
-            print(f"[waybar-toggle-vpn] {message}", file=sys.stderr)
-            raise SystemExit(result.returncode or 1)
-        raise SystemExit(0)
-
-    try:
-        candidate = first_vpn(False)
-    except RuntimeError as exc:
-        print(f"[waybar-toggle-vpn] {exc}", file=sys.stderr)
-        raise SystemExit(1)
-
-    if not candidate:
-        print("[waybar-toggle-vpn] No VPN profiles configured.", file=sys.stderr)
-        raise SystemExit(1)
-
-    result = call_nmcli(["connection", "up", "id", candidate])
-    if result.returncode != 0:
-        message = result.stderr.strip() or result.stdout.strip()
-        print(f"[waybar-toggle-vpn] {message}", file=sys.stderr)
-        raise SystemExit(result.returncode or 1)
-    PY
-  '';
-
   powerMenuFile = pkgs.writeText "waybar-power-menu.xml" ''
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
@@ -325,7 +173,6 @@ in
             "bluetooth"
             "custom/cpu"
             "custom/thermal"
-            "custom/vpn"
             "pulseaudio"
             "tray"
             "custom/power"
@@ -351,13 +198,6 @@ in
             exec = "${thermalStatusScript}/bin/waybar-thermal-status";
             interval = 10;
             return-type = "json";
-          };
-          "custom/vpn" = {
-            exec = "${vpnStatusScript}/bin/waybar-vpn-status";
-            interval = 5;
-            return-type = "json";
-            on-click = "${vpnToggleScript}/bin/waybar-toggle-vpn";
-            on-click-right = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           };
           "custom/power" = {
             format = "    ";

@@ -16,7 +16,7 @@
 
   users.users.papdawin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };

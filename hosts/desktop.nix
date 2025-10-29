@@ -8,6 +8,8 @@
     ../modules/programs/staples.nix
     ../modules/programs/gaming.nix
     ../modules/programs/git.nix
+    ../modules/programs/docker.nix
+    ../modules/hardware/nvidia.nix
   ];
 
   boot.loader = {
