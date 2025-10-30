@@ -82,7 +82,6 @@ in
           "$mod" = "SUPER";
           env = [
             "NIXOS_OZONE_WL,1"
-            "XCURSOR_THEME,Bibata-Modern-Ice"
             "XCURSOR_SIZE,24"
           ];
           cursor = {
@@ -147,12 +146,6 @@ in
 
       programs.alacritty.enable = true;
       services.dunst.enable = true;
-
-      home.pointerCursor = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Ice";
-        size = 24;
-      };
 
       programs.rofi = {
         enable = true;

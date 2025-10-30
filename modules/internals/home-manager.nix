@@ -17,8 +17,7 @@
       flavor = "macchiato";
       accent = "peach";
       waybar.enable = true;
+      cursors.enable = true;
     };
-
-    catppuccin.cursors.enable = false; # Does not work as of now
   };
 }
