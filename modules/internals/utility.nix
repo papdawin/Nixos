@@ -9,6 +9,8 @@ in
         pavucontrol
         networkmanagerapplet
         openvpn
+        talosctl
+        kubectl
   ];
   
   services.openvpn.servers.homeLab = {

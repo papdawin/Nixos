@@ -1,6 +1,6 @@
 # NixOS home configurations
 
-This repository contains my **personal NixOS configuration**, shared across multiple machines — `server`, `desktop`, and `laptop`.
+This repository contains my **personal NixOS configuration**, shared across multiple machines — `desktop` and `laptop`.
 It uses **flakes**, **home-manager**, and the **Catppuccin** theme for a consistent, reproducible setup.
 
 ## Overview
@@ -16,7 +16,6 @@ This flake defines NixOS configurations for all my systems using a modular struc
 │   ├── core.nix
 │   └── sysops.nix
 └── hosts/
-    ├── server.nix
     ├── desktop.nix
     ├── laptop.nix
     └── hardware/ # Contains hardware-configurations
@@ -27,7 +26,6 @@ This flake defines NixOS configurations for all my systems using a modular struc
 To rebuild the system and switch to the latest configuration:
 
 ```bash
-sudo nixos-rebuild switch --flake .#server
 sudo nixos-rebuild switch --flake .#desktop
 sudo nixos-rebuild switch --flake .#laptop
 ```
@@ -42,7 +40,7 @@ If you’re setting up a new machine or refreshing hardware definitions, generat
 sudo nixos-generate-config --show-hardware-config > ~/nixos/hosts/hardware/desktop-hardware.nix
 ```
 
-*Note: Replace `desktop` with `server` or `laptop` as needed.*
+*Note: Replace `desktop` with `laptop` as needed.*
 
 The repository assumes your NixOS configs are stored under `~/nixos/`.
 

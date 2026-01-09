@@ -27,9 +27,6 @@
       };
   in {
     nixosConfigurations = {
-      server  = mkHost "server"  [
-        ./hosts/hardware/server-hardware.nix
-      ];
       desktop = mkHost "desktop" [
         ./hosts/hardware/desktop-hardware.nix
       ];

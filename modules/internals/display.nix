@@ -24,6 +24,7 @@ in
 
     waybar
     rofi-wayland
+    wlogout
   ];
 
   programs.hyprland = lib.mkIf isDesktop {
