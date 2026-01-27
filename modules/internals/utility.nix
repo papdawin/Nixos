@@ -1,6 +1,5 @@
 { pkgs, ... }:
 let
-  homeLabProfile = ./openvpn/sonrisa.ovpn;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -13,9 +12,15 @@ in
         kubectl
   ];
   
-  services.openvpn.servers.homeLab = {
-    autoStart = true;
-    config = builtins.readFile homeLabProfile;
+  services.openvpn.servers = {
+    homeLab = {
+      autoStart = false;
+      config = '' config /home/papdawin/Documents/openvpn/homeLab.ovpn '';
+    };
+    sonrisa = {
+      autoStart = false;
+      config = '' config /home/papdawin/Documents/openvpn/sonrisa.ovpn '';
+    };
   };
 
   hardware.bluetooth = {

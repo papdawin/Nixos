@@ -23,6 +23,7 @@ in
               "pulseaudio"
               "bluetooth"
               "battery"
+              "network"
               "tray"
               "custom/power"
             ];
@@ -62,6 +63,12 @@ in
               format-plugged = "  {capacity}%";
               format-icons = [ "" "" "" "" "" ];
             };
+            network = {
+              interface = "tun0";
+              format-ethernet = "  VPN";
+              tooltip-format = "{ifname}: {ipaddr}";
+              on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+            };
             tray = { spacing = 8; };
             "custom/power" = {
               format = "";
@@ -89,35 +96,12 @@ in
           #bluetooth,
           #battery,
           #tray,
+          #network,
           #custom-power {
             background: rgba(32, 34, 54, 0.85);
             padding: 4px 12px;
             margin: 0 4px;
             border-radius: 999px;
-          }
-
-          #workspaces {
-            background: rgba(32, 34, 54, 0.35);
-            padding: 4px 8px;
-            border-radius: 999px;
-          }
-
-          #workspaces button {
-            color: #a5b4fc;
-            background: transparent;
-            padding: 2px 6px;
-            margin: 0 2px;
-          }
-
-          #workspaces button.focused {
-            background: #7aa2f7;
-            color: #0f172a;
-            border-radius: 6px;
-          }
-
-          #workspaces button.urgent {
-            background: #f7768e;
-            color: #0f172a;
           }
         '';
       };

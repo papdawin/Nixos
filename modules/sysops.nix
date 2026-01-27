@@ -7,5 +7,6 @@
     htop 
     jq 
     unzip
+    zip
   ];
 }
