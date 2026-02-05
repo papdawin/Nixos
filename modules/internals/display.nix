@@ -20,7 +20,6 @@ in
     hyprshot
     nautilus
     blueman
-    htop
 
     waybar
     rofi-wayland

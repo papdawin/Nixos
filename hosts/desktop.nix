@@ -7,8 +7,8 @@
     ../modules/internals/home-manager.nix
     ../modules/programs/staples.nix
     ../modules/programs/gaming.nix
-    ../modules/programs/git.nix
     ../modules/programs/docker.nix
+    ../modules/programs/desktop.nix
     ../modules/hardware/nvidia.nix
   ];
 

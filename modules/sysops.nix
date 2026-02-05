@@ -6,6 +6,7 @@
     wget 
     htop 
     jq 
+    python3
     unzip
     zip
   ];
