@@ -4,6 +4,19 @@
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
   };
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/home/papdawin/Nixos";
+    dates = "weekly";
+    randomizedDelaySec = "45min";
+    allowReboot = false;
+  };
 
   time.timeZone = "Europe/Budapest";
   i18n.defaultLocale = "en_US.UTF-8";

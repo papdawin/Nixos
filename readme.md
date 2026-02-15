@@ -32,6 +32,25 @@ sudo nixos-rebuild switch --flake .#laptop
 
 Each command builds and activates the configuration for the corresponding host.
 
+## Update / upgrade flake
+
+Update inputs and apply them:
+
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake .#desktop
+# or
+sudo nixos-rebuild switch --flake .#laptop
+```
+
+Quick check before switching:
+
+```bash
+nix flake check
+```
+
+Automatic upgrades are also enabled via `system.autoUpgrade` (weekly, no automatic reboot).
+
 ## Hardware configs (new machine)
 
 If you’re setting up a new machine or refreshing hardware definitions, generate a hardware configuration file:

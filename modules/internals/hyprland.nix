@@ -158,33 +158,9 @@ in
       };
 
       xdg.configFile."hypr/hyprpaper.conf".text = ''
-# Catppuccin Mocha inspired wallpaper setup.
-# Drop your wallpaper at ~/Pictures/nix-black.png
-preload = ~/Pictures/nix-black.png
-wallpaper = HDMI-A-2,~/Pictures/nix-black.png
-wallpaper = HDMI-A-3,~/Pictures/nix-black.png
-splash = false
-ipc = off
+        preload = ~/Pictures/nix-black.png
+        wallpaper = ,~/Pictures/nix-black.png
+        ipc = off
       '';
-
-#       xdg.configFile."hypr/hyprsunset.conf".text = ''
-# # Catppuccin warm tint through the evening.
-# lat = 47.5
-# lon = 19.0
-# temp-day = 6500
-# temp-night = 4700
-# transition-length = 20
-# gamma = 1.0
-# brightness-day = 1.0
-# brightness-night = 0.9
-#       '';
-
-      # xdg.mimeApps = {
-      #   enable = true;
-      #   defaultApplications = {
-      #     "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
-      #     "application/x-gnome-saved-search" = [ "org.gnome.Nautilus.desktop" ];
-      #   };
-      # };
     };
 }
