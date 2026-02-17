@@ -6,9 +6,7 @@ in
   imports = [ ./waybar-config.nix ];
 
   console.keyMap = "hu";
-
   services.xserver.enable = false;
-
   systemd.services."getty@tty1".enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -19,7 +17,6 @@ in
     hyprpaper
     hyprshot
     nautilus
-    blueman
 
     waybar
     rofi-wayland
@@ -29,10 +26,6 @@ in
   programs.hyprland = lib.mkIf isDesktop {
     enable = true;
     package = pkgs.hyprland;
-  };
-
-  programs.gamemode = lib.mkIf isDesktop {
-    enable = true;
   };
 
   # Provide icon fonts so Waybar glyphs render correctly.
@@ -52,8 +45,6 @@ in
       };
     };
   };
-
-  services.blueman.enable = lib.mkIf isDesktop true;
 
   xdg.portal = lib.mkIf isDesktop {
     enable = true;

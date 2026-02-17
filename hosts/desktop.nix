@@ -9,7 +9,9 @@
     ../modules/programs/gaming.nix
     ../modules/programs/docker.nix
     ../modules/programs/desktop.nix
-    ../modules/hardware/nvidia.nix
+    ../modules/hardware/graphics.nix
+    ../modules/hardware/bluetooth.nix
+    ../modules/hardware/sound.nix
   ];
 
   boot.loader = {

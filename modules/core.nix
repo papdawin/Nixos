@@ -17,7 +17,9 @@
     randomizedDelaySec = "45min";
     allowReboot = false;
   };
-
+  
+  time.hardwareClockInLocalTime = true;
+  services.gvfs.enable = true;
   time.timeZone = "Europe/Budapest";
   i18n.defaultLocale = "en_US.UTF-8";
 
