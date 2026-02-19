@@ -3,6 +3,7 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
+    warn-dirty = false;
   };
 
   nix.gc = {
@@ -26,6 +27,15 @@
   networking.networkmanager.enable = true;
   services.openssh.enable = true;
   nixpkgs.config.allowUnfree = true;
+
+    environment.systemPackages = with pkgs; [
+    git 
+    curl 
+    wget
+    jq
+    unzip
+    zip
+  ];
 
   system.stateVersion = "25.05";
 }

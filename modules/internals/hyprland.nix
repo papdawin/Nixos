@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ./configs/waybar.nix
+    ./configs/hyprpanel.nix
     ./configs/hyprland-home.nix
     ./configs/fonts.nix
     ./configs/greetd.nix
@@ -23,9 +23,12 @@ in
     hyprshot
     nautilus
 
-    waybar
+    hyprpanel
     rofi-wayland
     wlogout
+    adwaita-icon-theme
+    hicolor-icon-theme
+    papirus-icon-theme
   ];
 
   programs.hyprland = lib.mkIf isDesktop {

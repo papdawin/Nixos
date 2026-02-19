@@ -5,5 +5,8 @@
   environment.systemPackages = with pkgs; [
     docker-compose
     lazydocker
+    lazygit
+    vscodium
+    python3
   ];
 }

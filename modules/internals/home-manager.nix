@@ -17,7 +17,6 @@
       enable = true;
       flavor = "macchiato";
       accent = "peach";
-      waybar.enable = true;
       cursors.enable = true;
     };
   };

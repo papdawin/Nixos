@@ -78,7 +78,7 @@ in
             "${pkgs.hyprpaper}/bin/hyprpaper"
             "${pkgs.hyprsunset}/bin/hyprsunset"
             "${pkgs.blueman}/bin/blueman-applet"
-            "waybar"
+            "hyprpanel"
           ];
         };
       };
