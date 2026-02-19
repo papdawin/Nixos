@@ -1,19 +1,25 @@
-# NixOS Configuration
+# My NixOS Configuration
+![nixos](https://img.shields.io/badge/NixOS-25.05-8aadf4.svg?style=flat&logo=nixos&logoColor=CAD3F5&colorA=24273A)
+![nixpkgs](https://img.shields.io/badge/nixpkgs-nixos--25.05-informational.svg?style=flat&logo=nixos&logoColor=CAD3F5&colorA=24273A&colorB=8aadf4)
+![home-manager](https://img.shields.io/badge/home--manager-release--25.05-informational.svg?style=flat&logo=homeassistant&logoColor=8aadf4&colorA=24273A&colorB=91d7e3)
+![catppuccin](https://img.shields.io/badge/catppuccin-release--25.05-informational.svg?style=flat&logo=catppuccin&logoColor=f5bde6&colorA=24273A&colorB=f5bde6)
+![hyprland](https://img.shields.io/badge/hyprland-desktop_host-informational.svg?style=flat&logo=wayland&logoColor=eed49f&colorA=24273A&colorB=91d7e3)
+![gnome](https://img.shields.io/badge/GNOME-laptop_host-informational.svg?style=flat&logo=gnome&logoColor=c6a0f6&colorA=24273A&colorB=c6a0f6)
+![nvidia](https://img.shields.io/badge/NVIDIA-stable_driver-informational.svg?style=flat&logo=nvidia&logoColor=a6da95&colorA=24273A&colorB=a6da95)
 
-Personal NixOS flake for two hosts:
-- `desktop`: Hyprland + Hyprpanel workstation and gaming setup
-- `laptop`: GNOME-based work setup
+My personal configuration for my workstations, which I use for my daily home desktop and my work laptop.
+- `desktop`: Hyprland + Hyprpanel workstation which I also use for gaming
+- `laptop`: GNOME based work setup
 
-Built with:
-- Nix flakes (`nixos-25.05`)
-- Home Manager (`release-25.05`)
-- Catppuccin (`release-25.05`)
-
-## Desktop Screenshot
+### Desktop
 
 ![Desktop Screenshot](https://raw.githubusercontent.com/papdawin/Nixos/main/pictures/desktop.png)
 
-Screenshot of my desktop
+*Screencapture of my desktop*
+
+### Laptop
+
+To be uploaded...
 
 ## Repository Layout
 
@@ -92,6 +98,8 @@ Replace `<host>` with `desktop` or `laptop`.
 
 ## Obsidian Drive Sync (rclone)
 
+I also use GoogleDrive as my Obsidian vault, which is set up and synced according to the following.
+
 Initial setup:
 
 ```bash
@@ -104,3 +112,10 @@ Manual sync:
 ```bash
 rclone bisync "gdrive:[08]Obsidian" "$HOME/Drive/[08]Obsidian"
 ```
+
+### Notes
+
+Built with:
+- Nix flakes (`nixos-25.05`)
+- Home Manager (`release-25.05`)
+- Catppuccin (`release-25.05`)
