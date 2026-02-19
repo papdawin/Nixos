@@ -1,89 +1,106 @@
-# NixOS home configurations
+# NixOS Configuration
 
-This repository contains my **personal NixOS configuration**, shared across multiple machines — `desktop` and `laptop`.
-It uses **flakes**, **home-manager**, and the **Catppuccin** theme for a consistent, reproducible setup.
+Personal NixOS flake for two hosts:
+- `desktop`: Hyprland + Hyprpanel workstation and gaming setup
+- `laptop`: GNOME-based work setup
 
-## Overview
+Built with:
+- Nix flakes (`nixos-25.05`)
+- Home Manager (`release-25.05`)
+- Catppuccin (`release-25.05`)
 
-This flake defines NixOS configurations for all my systems using a modular structure:
+## Desktop Screenshot
 
-```
+![Desktop Screenshot](https://raw.githubusercontent.com/papdawin/Nixos/main/pictures/desktop.png)
+
+Screenshot of my desktop
+
+## Repository Layout
+
+```text
 .
 ├── flake.nix
-├── modules/
-│   ├── internals/ # Utilities, Desktop managers
-│   ├── programs/ # Programs bundled together
-│   ├── core.nix
-│   └── sysops.nix
-└── hosts/
-    ├── desktop.nix
-    ├── laptop.nix
-    └── hardware/ # Contains hardware-configurations
+├── hosts/
+│   ├── desktop.nix
+│   ├── laptop.nix
+│   └── hardware/
+│       ├── desktop-hardware.nix
+│       └── laptop-hardware.nix
+└── modules/
+    ├── orchestrator.nix
+    ├── internals/
+    │   ├── system.nix
+    │   ├── users.nix
+    │   ├── home-manager.nix
+    │   ├── hyprland.nix
+    │   ├── gnome.nix
+    │   ├── vpn.nix
+    │   └── configs/
+    │       ├── hyprland-home.nix
+    │       ├── hyprpanel.nix
+    │       ├── greetd.nix
+    │       └── fonts.nix
+    ├── hardware/
+    │   ├── graphics.nix
+    │   ├── sound.nix
+    │   └── bluetooth.nix
+    └── programs/
+        ├── staples.nix
+        ├── dev.nix
+        ├── gaming.nix
+        ├── desktop.nix
+        └── sonrisa.nix
 ```
 
-## Quick start (install/switch)
+## Host Profiles
 
-From the repo root:
+### `desktop`
+- Hyprland + `greetd`
+- Hyprpanel with custom bar layout
+
+### `laptop`
+- GNOME + GDM
+- Home Manager + Catppuccin
+
+## Apply Configuration
+
+From repository root:
 
 ```bash
-sudo nixos-rebuild switch --flake .#desktop
-sudo nixos-rebuild switch --flake .#laptop
-```
-
-Each command builds and activates the configuration for the corresponding host.
-
-## Update / upgrade flake
-
-Update inputs and apply them:
-
-```bash
-nix flake update
 sudo nixos-rebuild switch --flake .#desktop
 # or
 sudo nixos-rebuild switch --flake .#laptop
 ```
 
-Quick check before switching:
+## Update Flake Inputs
 
 ```bash
+nix flake update
 nix flake check
+sudo nixos-rebuild switch --flake .#desktop
 ```
 
-Automatic upgrades are also enabled via `system.autoUpgrade` (weekly, no automatic reboot).
+Auto-upgrade is enabled weekly via `system.autoUpgrade` (no auto reboot).
 
-## Hardware configs (new machine)
-
-If you’re setting up a new machine or refreshing hardware definitions, generate a hardware configuration file:
+## Add/Refresh Hardware Config
 
 ```bash
-sudo nixos-generate-config --show-hardware-config > ~/nixos/hosts/hardware/desktop-hardware.nix
+sudo nixos-generate-config --show-hardware-config > /home/papdawin/Nixos/hosts/hardware/<host>-hardware.nix
 ```
 
-*Note: Replace `desktop` with `laptop` as needed.*
+Replace `<host>` with `desktop` or `laptop`.
 
-The repository assumes your NixOS configs are stored under `~/nixos/`.
+## Obsidian Drive Sync (rclone)
 
-You can add more hosts by creating a new `.nix` file in `hosts/` and corresponding hardware config in `hosts/hardware/`.
-
-## Drive setup for Obsidian
-
-One-time setup:
+Initial setup:
 
 ```bash
 rclone config
 rclone bisync "gdrive:[08]Obsidian" "$HOME/Drive/[08]Obsidian" --resync
-systemctl --user enable --now rclone-bisync.timer
 ```
 
-Manual sync (if needed):
+Manual sync:
 
 ```bash
 rclone bisync "gdrive:[08]Obsidian" "$HOME/Drive/[08]Obsidian"
 ```
-
-
-## Credits
-
-* [NixOS](https://nixos.org)
-* [Home Manager](https://github.com/nix-community/home-manager)
-* [Catppuccin Theme](https://github.com/catppuccin/nix)
