@@ -2,8 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
         openvpn
-        talosctl
-        kubectl
   ];
   
   services.openvpn.servers = {

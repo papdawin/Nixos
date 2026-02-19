@@ -16,12 +16,11 @@
     mkHost = hostName: extraModules:
       lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit catppuccin; };
+        specialArgs = { inherit catppuccin hostName; };
         modules = [
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
-          ./modules/core.nix
-          ./modules/sysops.nix
+          ./modules/orchestrator.nix
           (./hosts + "/${hostName}.nix")
         ] ++ extraModules;
       };
