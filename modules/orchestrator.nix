@@ -22,6 +22,7 @@
       ./internals/home-manager.nix
       ./programs/dev.nix
       ./programs/sonrisa.nix
+      ./programs/staples.nix
     ];
 
   boot.loader = {

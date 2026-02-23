@@ -13,5 +13,7 @@
 
   environment.systemPackages = with pkgs; [
     gnome-tweaks
+    whitesur-gtk-theme
+    gnomeExtensions.user-themes
   ];
 }

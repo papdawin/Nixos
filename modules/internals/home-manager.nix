@@ -12,6 +12,19 @@
 
     home.stateVersion = "25.05";
     programs.home-manager.enable = true;
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        gtk-theme = "WhiteSur-Dark";
+      };
+      "org/gnome/shell" = {
+        enabled-extensions = [
+          "user-theme@gnome-shell-extensions.gcampax.github.com"
+        ];
+      };
+      "org/gnome/shell/extensions/user-theme" = {
+        name = "WhiteSur-Dark";
+      };
+    };
 
     catppuccin = {
       enable = true;

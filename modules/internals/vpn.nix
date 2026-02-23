@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-        openvpn
+    openvpn
+    zerotierone
   ];
   
   services.openvpn.servers = {

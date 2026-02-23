@@ -8,5 +8,6 @@
     lazygit
     vscodium
     python3
+    gh
   ];
 }
