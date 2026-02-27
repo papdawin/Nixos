@@ -7,5 +7,6 @@
     spotify
     obsidian
     rclone
+    libreoffice
   ];
 }
