@@ -8,5 +8,6 @@
     obsidian
     rclone
     libreoffice
+    remmina
   ];
 }

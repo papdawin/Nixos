@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    awscli
+    awscli2
     aws-vault
   ];
 }

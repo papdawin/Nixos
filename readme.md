@@ -19,7 +19,9 @@ My personal configuration for my workstations, which I use for my daily home des
 
 ### Laptop
 
-To be uploaded...
+![Laptop Screenshot](https://raw.githubusercontent.com/papdawin/Nixos/main/pictures/laptop.png)
+
+*Screencapture of my work laptop*
 
 ## Repository Layout
 
