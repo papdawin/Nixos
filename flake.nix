@@ -6,9 +6,10 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix/release-25.05";
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, catppuccin, ... }:
+  outputs = { self, nixpkgs, home-manager, catppuccin, llm-agents, ... }:
   let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
@@ -16,7 +17,7 @@
     mkHost = hostName: extraModules:
       lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit catppuccin hostName; };
+        specialArgs = { inherit catppuccin hostName llm-agents; };
         modules = [
           catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager

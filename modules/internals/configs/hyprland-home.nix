@@ -10,8 +10,8 @@ in
         package = pkgs.hyprland;
         settings = {
           monitor = [
-            "HDMI-A-3,preferred,0x0,1"
-            "HDMI-A-2,preferred,1920x0,1"
+            "HDMI-A-2,preferred,0x0,1"
+            "HDMI-A-3,preferred,1920x0,1"
           ];
           input = {
             kb_layout = "hu";

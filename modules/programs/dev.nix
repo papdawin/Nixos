@@ -9,6 +9,7 @@
     vscodium
     python3
     gh
+    sops
     terraform
     terragrunt
     kubectl

@@ -12,6 +12,11 @@
 
     home.stateVersion = "25.05";
     programs.home-manager.enable = true;
+    programs.zsh.enable = true;
+    programs.starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     dconf.settings = {
       "org/gnome/desktop/interface" = {
         gtk-theme = "WhiteSur-Dark";
