@@ -3,12 +3,14 @@ let
   isDesktop = config.networking.hostName == "desktop";
 in
 {
-  home-manager.users.papdawin = { pkgs, ... }:
+  home-manager.users.papdawin =
+    { pkgs, ... }:
     lib.mkIf isDesktop {
       wayland.windowManager.hyprland = {
         enable = true;
         package = pkgs.hyprland;
         settings = {
+          "$menu" = "noctalia-shell ipc call";
           monitor = [
             "HDMI-A-2,preferred,0x0,1"
             "HDMI-A-3,preferred,1920x0,1"
@@ -22,6 +24,7 @@ in
           env = [
             "NIXOS_OZONE_WL,1"
             "XCURSOR_SIZE,24"
+            "QT_QPA_PLATFORMTHEME,qt6ct"
           ];
           cursor = {
             inactive_timeout = 0;
@@ -55,8 +58,13 @@ in
             "$mod,Backspace,killactive"
             "$mod,B,exec,brave"
             "$mod,C,exec,codium"
+            "$mod,D,exec,$menu launcher toggle"
             "$mod,Q,exec,pkill Hyprland"
-            "$mod,D,exec,rofi -show drun"
+            "$mod,S,exec,$menu controlCenter toggle"
+            "$mod,comma,exec,$menu settings toggle"
+            "$mod,N,exec,$menu notifications toggleHistory"
+            "$mod,Escape,exec,$menu sessionMenu toggle"
+            "$mod,L,exec,$menu lockScreen lock"
             "$mod SHIFT,S,exec,hyprshot -m region"
             "$mod,PRINT,exec,hyprshot -m output"
             "$mod,E,exec,nautilus"
@@ -73,33 +81,23 @@ in
             "$mod,mouse:272,movewindow"
             "$mod,mouse:273,resizewindow"
           ];
+          bindel = [
+            ",XF86AudioRaiseVolume,exec,$menu volume increase"
+            ",XF86AudioLowerVolume,exec,$menu volume decrease"
+            ",XF86MonBrightnessUp,exec,$menu brightness increase"
+            ",XF86MonBrightnessDown,exec,$menu brightness decrease"
+          ];
+          bindl = [
+            ",XF86AudioMute,exec,$menu volume muteOutput"
+          ];
           "exec-once" = [
-            "${pkgs.hyprlock}/bin/hyprlock --immediate"
-            "${pkgs.hyprpaper}/bin/hyprpaper"
             "${pkgs.hyprsunset}/bin/hyprsunset"
             "${pkgs.blueman}/bin/blueman-applet"
-            "hyprpanel"
+            "noctalia-shell"
           ];
         };
       };
 
       programs.alacritty.enable = true;
-      services.dunst.enable = true;
-
-      programs.rofi = {
-        enable = true;
-        package = pkgs.rofi-wayland;
-        extraConfig = {
-          modi = "drun";
-          show-icons = false;
-          display-drun = "Search";
-        };
-      };
-
-      xdg.configFile."hypr/hyprpaper.conf".text = ''
-        preload = ~/Pictures/nix-black.png
-        wallpaper = ,~/Pictures/nix-black.png
-        ipc = off
-      '';
     };
 }

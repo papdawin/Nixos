@@ -1,9 +1,16 @@
-{ pkgs, ... }:
+{ pkgs, librepods, ... }:
+let
+  librepodsPkg = librepods.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in
 {
-  environment.systemPackages = with pkgs; [
-    nodejs
-    networkmanagerapplet
-    qbittorrent
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      nodejs
+      networkmanagerapplet
+      qbittorrent
+    ])
+    ++ [
+      librepodsPkg
+    ];
 
 }
