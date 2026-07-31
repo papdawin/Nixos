@@ -1,13 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   programs.git.enable = true;
 
   environment.systemPackages = with pkgs; [
     brave
-    spotify
+    youtube-music
     obsidian
     rclone
     libreoffice
-    remmina
   ];
 }

@@ -40,7 +40,6 @@
               ;
           };
           modules = [
-            catppuccin.nixosModules.catppuccin
             home-manager.nixosModules.home-manager
             ./modules/orchestrator.nix
             (./hosts + "/${hostName}.nix")

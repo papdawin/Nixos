@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -28,7 +28,7 @@
   services.openssh.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-    environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     git 
     curl 
     wget

@@ -8,7 +8,7 @@
 ![nvidia](https://img.shields.io/badge/NVIDIA-stable_driver-informational.svg?style=flat&logo=nvidia&logoColor=a6da95&colorA=24273A&colorB=a6da95)
 
 My personal configuration for my workstations, which I use for my daily home desktop and my work laptop.
-- `desktop`: Hyprland + Hyprpanel workstation which I also use for gaming
+- `desktop`: Hyprland + Noctalia workstation which I also use for gaming
 - `laptop`: GNOME based work setup
 
 ### Desktop
@@ -45,9 +45,9 @@ My personal configuration for my workstations, which I use for my daily home des
     │   ├── vpn.nix
     │   └── configs/
     │       ├── hyprland-home.nix
-    │       ├── hyprpanel.nix
     │       ├── greetd.nix
-    │       └── fonts.nix
+    │       ├── fonts.nix
+    │       └── noctalia.nix
     ├── hardware/
     │   ├── graphics.nix
     │   ├── sound.nix
@@ -64,7 +64,7 @@ My personal configuration for my workstations, which I use for my daily home des
 
 ### `desktop`
 - Hyprland + `greetd`
-- Hyprpanel with custom bar layout
+- Noctalia shell with a custom LibrePods launcher plugin
 
 ### `laptop`
 - GNOME + GDM
