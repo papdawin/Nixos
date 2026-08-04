@@ -8,5 +8,8 @@
     obsidian
     rclone
     libreoffice
+    freerdp
+    remmina
+    keepassxc
   ];
 }

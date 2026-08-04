@@ -9,6 +9,10 @@
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     librepods.url = "github:librepods-org/librepods?ref=linux/rust";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    localCerts = {
+      url = "path:/home/papdawin/certs";
+      flake = false;
+    };
   };
 
   outputs =
@@ -19,7 +23,7 @@
       catppuccin,
       noctalia,
       librepods,
-      llm-agents,
+      llm-agents, localCerts,
       ...
     }:
     let
@@ -36,7 +40,7 @@
               noctalia
               librepods
               hostName
-              llm-agents
+              llm-agents localCerts
               ;
           };
           modules = [

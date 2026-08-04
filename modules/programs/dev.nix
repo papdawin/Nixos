@@ -9,9 +9,11 @@
     vscodium
     python3
     gh
+    azure-cli
     sops
     terraform
     terragrunt
+    teleport
     kubectl
     k9s
   ];
