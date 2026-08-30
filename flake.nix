@@ -3,32 +3,36 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix/release-25.05";
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     librepods.url = "github:librepods-org/librepods?ref=linux/rust";
     llm-agents.url = "github:numtide/llm-agents.nix";
-    localCerts = {
-      url = "path:/home/papdawin/certs";
-      flake = false;
-    };
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       catppuccin,
       noctalia,
       librepods,
-      llm-agents, localCerts,
+      llm-agents,
+      hermes-agent,
       ...
     }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
+      pkgsUnstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
 
       mkHost =
         hostName: extraModules:
@@ -40,11 +44,14 @@
               noctalia
               librepods
               hostName
-              llm-agents localCerts
+              llm-agents
+              hermes-agent
+              pkgsUnstable
               ;
           };
           modules = [
             home-manager.nixosModules.home-manager
+            hermes-agent.nixosModules.default
             ./modules/orchestrator.nix
             (./hosts + "/${hostName}.nix")
           ]

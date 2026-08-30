@@ -98,6 +98,16 @@ in
         };
       };
 
-      programs.alacritty.enable = true;
+      programs.alacritty = {
+        enable = true;
+        settings.keyboard.bindings = [
+          {
+            key = "Enter";
+            mods = "Shift";
+            # Hermes binds Alt+Enter as Escape followed by Enter.
+            chars = builtins.fromJSON ''"\u001b\r"'';
+          }
+        ];
+      };
     };
 }

@@ -15,6 +15,7 @@
     terragrunt
     teleport
     kubectl
+    kubernetes-helm
     k9s
   ];
 }
