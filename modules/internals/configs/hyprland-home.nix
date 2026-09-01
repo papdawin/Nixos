@@ -104,7 +104,7 @@ in
           {
             key = "Enter";
             mods = "Shift";
-            # Hermes binds Alt+Enter as Escape followed by Enter.
+
             chars = builtins.fromJSON ''"\u001b\r"'';
           }
         ];

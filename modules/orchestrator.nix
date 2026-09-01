@@ -15,7 +15,7 @@
       ./programs/staples.nix
       ./programs/gaming.nix
       ./programs/dev.nix
-      ./programs/llm.nix
+      ./programs/agentic/harness.nix
       ./programs/desktop.nix
     ]
     ++ lib.optionals (hostName == "laptop") [
