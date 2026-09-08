@@ -2,7 +2,6 @@
 {
   environment.systemPackages = with pkgs; [
     openvpn
-    zerotierone
   ];
   
   services.openvpn.servers = {

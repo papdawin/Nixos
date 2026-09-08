@@ -8,6 +8,7 @@ in
     lib.mkIf isDesktop {
       wayland.windowManager.hyprland = {
         enable = true;
+        configType = "hyprlang";
         package = pkgs.hyprland;
         settings = {
           "$menu" = "noctalia-shell ipc call";

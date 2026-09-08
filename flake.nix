@@ -2,11 +2,11 @@
   description = "My personal nixos configuration used across my workstations";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.url = "github:catppuccin/nix/release-25.05";
+    catppuccin.url = "github:catppuccin/nix/release-26.05";
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     librepods.url = "github:librepods-org/librepods?ref=linux/rust";
     llm-agents.url = "github:numtide/llm-agents.nix";

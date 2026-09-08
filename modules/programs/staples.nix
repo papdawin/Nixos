@@ -4,12 +4,9 @@
 
   environment.systemPackages = with pkgs; [
     brave
-    youtube-music
+    pear-desktop
     obsidian
     rclone
     libreoffice
-    freerdp
-    remmina
-    keepassxc
   ];
 }

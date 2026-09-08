@@ -26,7 +26,7 @@ in
     hyprshot
     nautilus
 
-    qt6ct
+    qt6Packages.qt6ct
     adwaita-icon-theme
     hicolor-icon-theme
     papirus-icon-theme
