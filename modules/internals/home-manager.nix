@@ -25,6 +25,7 @@
         flavor = "macchiato";
         accent = "peach";
         cursors.enable = true;
+        hyprland.enable = false;
       };
     };
 }

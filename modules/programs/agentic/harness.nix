@@ -1,5 +1,6 @@
 {
   hermes-agent,
+  hermesSkinCatppuccin,
   llm-agents,
   pkgs,
   ...
@@ -7,6 +8,10 @@
 let
   system = pkgs.stdenv.hostPlatform.system;
   llmHarnesses = llm-agents.packages.${system};
+  hermesCatppuccinSkin = pkgs.runCommand "hermes-skin-catppuccin-nix" { } ''
+    mkdir -p "$out/skins"
+    cp ${hermesSkinCatppuccin}/skins/catppuccin.yaml "$out/skins/catppuccin.yaml"
+  '';
 in
 {
   nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ];
@@ -45,6 +50,7 @@ in
 
       display = {
         interface = "tui";
+        skin = "catppuccin";
         show_cost = true;
         show_reasoning = false;
       };
@@ -55,6 +61,11 @@ in
       };
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/hermes/.hermes/skins 2770 hermes hermes - -"
+    "L+ /var/lib/hermes/.hermes/skins/catppuccin.yaml - - - - ${hermesCatppuccinSkin}/skins/catppuccin.yaml"
+  ];
 
   users.users.papdawin = {
     extraGroups = [ "hermes" ];

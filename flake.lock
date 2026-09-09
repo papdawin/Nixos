@@ -166,6 +166,22 @@
         "type": "github"
       }
     },
+    "hermesSkinCatppuccin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782672249,
+        "narHash": "sha256-qhHXb2TF3nODhT7zhvliXdYACzxlep8Nud/jlQm1c4I=",
+        "owner": "joeynyc",
+        "repo": "hermes-skins",
+        "rev": "cdedf3e374c4334764b0badcedf39f4047159d81",
+        "type": "github"
+      },
+      "original": {
+        "owner": "joeynyc",
+        "repo": "hermes-skins",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -510,6 +526,7 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "hermes-agent": "hermes-agent",
+        "hermesSkinCatppuccin": "hermesSkinCatppuccin",
         "home-manager": "home-manager_2",
         "librepods": "librepods",
         "llm-agents": "llm-agents",

@@ -8,7 +8,7 @@ in
     settings = {
       terminal.vt = lib.mkForce 7;
       default_session = {
-        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/Hyprland";
+        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.hyprland}/bin/start-hyprland";
         user = "papdawin";
       };
     };

@@ -20,7 +20,7 @@ in
             kb_layout = "hu";
             follow_mouse = 1;
           };
-          gestures.workspace_swipe = true;
+          gesture = [ "3, horizontal, workspace" ];
           "$mod" = "SUPER";
           env = [
             "NIXOS_OZONE_WL,1"

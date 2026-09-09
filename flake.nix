@@ -11,6 +11,10 @@
     librepods.url = "github:librepods-org/librepods?ref=linux/rust";
     llm-agents.url = "github:numtide/llm-agents.nix";
     hermes-agent.url = "github:NousResearch/hermes-agent";
+    hermesSkinCatppuccin = {
+      url = "github:joeynyc/hermes-skins";
+      flake = false;
+    };
   };
 
   outputs =
@@ -24,6 +28,7 @@
       librepods,
       llm-agents,
       hermes-agent,
+      hermesSkinCatppuccin,
       ...
     }:
     let
@@ -46,6 +51,7 @@
               hostName
               llm-agents
               hermes-agent
+              hermesSkinCatppuccin
               pkgsUnstable
               ;
           };
