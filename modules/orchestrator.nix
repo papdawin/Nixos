@@ -4,6 +4,7 @@
     [
       ./internals/system.nix
       ./internals/users.nix
+      ./programs/agentic/harness.nix
     ]
     ++ lib.optionals (hostName == "desktop") [
       ./hardware/graphics.nix
@@ -15,7 +16,6 @@
       ./programs/staples.nix
       ./programs/gaming.nix
       ./programs/dev.nix
-      ./programs/agentic/harness.nix
       ./programs/desktop.nix
     ]
     ++ lib.optionals (hostName == "laptop") [

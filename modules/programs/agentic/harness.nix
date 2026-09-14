@@ -32,7 +32,7 @@ in
     settings = {
       model = {
         provider = "openai-codex";
-        default = "gpt-5.6-terra";
+        default = "gpt-5.6-luna";
       };
 
       agent.verify_on_stop = true;
