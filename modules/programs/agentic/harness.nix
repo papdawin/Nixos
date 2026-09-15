@@ -22,6 +22,7 @@ in
     llmHarnesses.dsh
     pkgs.pnpm
     llmHarnesses.herdr
+    llmHarnesses.hunk
   ];
 
   services.hermes-agent = {

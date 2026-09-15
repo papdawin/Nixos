@@ -55,7 +55,7 @@ in
             "4,monitor:HDMI-A-3"
           ];
           bind = [
-            "$mod,Return,exec,alacritty"
+            "$mod,Return,exec,ghostty"
             "$mod,Backspace,killactive"
             "$mod,B,exec,brave"
             "$mod,C,exec,codium"
@@ -99,16 +99,6 @@ in
         };
       };
 
-      programs.alacritty = {
-        enable = true;
-        settings.keyboard.bindings = [
-          {
-            key = "Enter";
-            mods = "Shift";
 
-            chars = builtins.fromJSON ''"\u001b\r"'';
-          }
-        ];
-      };
     };
 }
