@@ -5,5 +5,6 @@
     aws-vault
     mysql84
     teleport
+    teams-for-linux
   ];
 }
