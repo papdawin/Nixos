@@ -2,19 +2,44 @@
   hermes-agent,
   hermesSkinCatppuccin,
   llm-agents,
+  hostName,
   pkgs,
   ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
   llmHarnesses = llm-agents.packages.${system};
-  hermesCatppuccinSkin = pkgs.runCommand "hermes-skin-catppuccin-nix" { } ''
-    mkdir -p "$out/skins"
-    cp ${hermesSkinCatppuccin}/skins/catppuccin.yaml "$out/skins/catppuccin.yaml"
-  '';
+  primaryModel =
+    if hostName == "desktop" then
+      {
+        provider = "openai-codex";
+        default = "gpt-5.6-luna";
+      }
+    else
+      {
+        provider = "anthropic";
+        default = "claude-sonnet-5-5";
+      };
+  fallbackProviders =
+    if hostName == "desktop" then
+      [
+        {
+          provider = "anthropic";
+          model = "claude-sonnet-5-5";
+        }
+      ]
+    else
+      [
+        {
+          provider = "openai-codex";
+          model = "gpt-5.6-luna";
+        }
+      ];
 in
 {
   nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ];
+
+  environment.variables.HERMES_HOME = "/home/papdawin/.hermes";
 
   environment.systemPackages = [
     pkgs.codex
@@ -29,12 +54,20 @@ in
     enable = true;
     package = hermes-agent.packages.${system}.minimal;
     addToSystemPackages = true;
+    createUser = false;
+    user = "papdawin";
+    group = "users";
+    stateDir = "/home/papdawin";
+    workingDirectory = "/home/papdawin";
+
+    hermesHomeFiles = {
+      "skins/catppuccin.yaml" = builtins.readFile "${hermesSkinCatppuccin}/skins/catppuccin.yaml";
+    };
 
     settings = {
-      model = {
-        provider = "openai-codex";
-        default = "gpt-5.6-luna";
-      };
+      model = primaryModel;
+
+      fallback_providers = fallbackProviders;
 
       agent.verify_on_stop = true;
 
@@ -63,13 +96,4 @@ in
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/hermes/.hermes/skins 2770 hermes hermes - -"
-    "L+ /var/lib/hermes/.hermes/skins/catppuccin.yaml - - - - ${hermesCatppuccinSkin}/skins/catppuccin.yaml"
-  ];
-
-  users.users.papdawin = {
-    extraGroups = [ "hermes" ];
-    homeMode = "0711";
-  };
 }

@@ -10,6 +10,7 @@ in
     ])
     ++ [
       librepodsPkg
+      pkgs.bambu-studio
     ];
 
 }
