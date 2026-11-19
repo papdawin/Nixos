@@ -13,7 +13,7 @@ let
     if hostName == "desktop" then
       {
         provider = "openai-codex";
-        default = "gpt-5.6-luna";
+        default = "gpt-6-luna";
       }
     else
       {
@@ -45,6 +45,7 @@ in
     pkgs.codex
     pkgs.claude-code
     llmHarnesses.dsh
+    llmHarnesses.orca
     pkgs.pnpm
     llmHarnesses.herdr
     llmHarnesses.hunk
