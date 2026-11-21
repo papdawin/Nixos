@@ -10,6 +10,10 @@
     noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
     librepods.url = "github:librepods-org/librepods?ref=linux/rust";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    orcaDesktop = {
+      url = "github:numtide/llm-agents.nix/60037f203e5f2dd1f318318c93e78a9a5e42646a";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     hermes-agent.url = "github:NousResearch/hermes-agent";
     hermesSkinCatppuccin = {
       url = "github:joeynyc/hermes-skins";
@@ -27,6 +31,7 @@
       noctalia,
       librepods,
       llm-agents,
+      orcaDesktop,
       hermes-agent,
       hermesSkinCatppuccin,
       ...
@@ -50,6 +55,7 @@
               librepods
               hostName
               llm-agents
+              orcaDesktop
               hermes-agent
               hermesSkinCatppuccin
               pkgsUnstable
