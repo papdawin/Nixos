@@ -2,15 +2,18 @@
   hermes-agent,
   hermesSkinCatppuccin,
   llm-agents,
+  orcaDesktop,
   hostName,
   pkgs,
   ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
+  isDesktop = hostName == "desktop";
+  browserPath = "${pkgs.brave}/bin/brave";
   llmHarnesses = llm-agents.packages.${system};
   primaryModel =
-    if hostName == "desktop" then
+    if isDesktop then
       {
         provider = "openai-codex";
         default = "gpt-6-luna";
@@ -21,7 +24,7 @@ let
         default = "claude-sonnet-5-5";
       };
   fallbackProviders =
-    if hostName == "desktop" then
+    if isDesktop then
       [
         {
           provider = "anthropic";
@@ -32,20 +35,26 @@ let
       [
         {
           provider = "openai-codex";
-          model = "gpt-5.6-luna";
+          model = "gpt-6-luna";
         }
       ];
 in
 {
-  nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ];
+  nixpkgs.overlays = [
+    llm-agents.overlays.shared-nixpkgs
+    orcaDesktop.overlays.shared-nixpkgs
+  ];
 
-  environment.variables.HERMES_HOME = "/home/papdawin/.hermes";
+  environment.variables = {
+    HERMES_HOME = "/home/papdawin/.hermes";
+    AGENT_BROWSER_EXECUTABLE_PATH = browserPath;
+  };
 
   environment.systemPackages = [
     pkgs.codex
     pkgs.claude-code
     llmHarnesses.dsh
-    llmHarnesses.orca
+    pkgs.llm-agents.orca
     pkgs.pnpm
     llmHarnesses.herdr
     llmHarnesses.hunk
@@ -60,13 +69,16 @@ in
     group = "users";
     stateDir = "/home/papdawin";
     workingDirectory = "/home/papdawin";
+    environment.AGENT_BROWSER_EXECUTABLE_PATH = browserPath;
 
     hermesHomeFiles = {
       "skins/catppuccin.yaml" = builtins.readFile "${hermesSkinCatppuccin}/skins/catppuccin.yaml";
     };
 
     settings = {
-      model = primaryModel;
+      model = primaryModel // { context_length = 1050000; };
+
+      browser.executable_path = browserPath;
 
       fallback_providers = fallbackProviders;
 
